@@ -3,7 +3,9 @@ package jp.techacademy.yuta.calcapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -26,10 +28,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.bt_div -> {operator = 4}
         }
 
-        val intent = Intent(this, ResultActivity::class.java)
-        intent.putExtra("operator", operator)
-        intent.putExtra("num1", editText1.text.toString().toDouble())
-        intent.putExtra("num2", editText2.text.toString().toDouble())
-        startActivity(intent)
+        if(operator != 0 && editText1.text.isNotEmpty() && editText2.text.isNotEmpty()) {
+            Log.d("calc", "isNotEmpty")
+            val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra("operator", operator)
+            intent.putExtra("num1", editText1.text.toString().toDouble())
+            intent.putExtra("num2", editText2.text.toString().toDouble())
+            startActivity(intent)
+        } else {
+            Log.d("calc", "Empty")
+            textView.text = "値を入力してください"
+        }
     }
 }
